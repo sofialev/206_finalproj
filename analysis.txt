@@ -3,11 +3,17 @@ calcAvgAttendance pulls the city name and attendance for each event in the DB.
 It then creates a dictioanary of citys and total attendance count in that city
 It uses this dictionary to calculate the average number of attendees at events in each city
 
+Our analysis shows that larger cities have events with much higher attendance
+
 Analysis #2:
 avg_wordcount calculates the average number of words of articles in each section
 It returns a dictioanry with the section as the key and the value is the average number
+
+Our analysis shows that the magazine section has the highest average word count
 
 Analysis #3:
 cloud_status calculates the frequencies of cloud statuses from the data base and 
 returns a dictionary where the keys are cloud statuses and the values are how many
 times they appeared in the DB
+
+Our analysis shows that clear skies is the most common cloud status
