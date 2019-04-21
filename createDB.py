@@ -1,7 +1,9 @@
 import apiCalls
 import sqlite3
 
-# This function calls cityInfo and inputs the data into the DB if it is not already there
+# In order to add more data into the desired table, uncomment the line that calls the associated function
+
+# This function calls cityInfo and inputs the data into the table, Top20EventsinCities, if it is not already there
 def yelp_info():
     cityEventsList = apiCalls.cityInfo()
 
@@ -26,6 +28,7 @@ def yelp_info():
 
 #yelp_info()
 
+# This function calls NYT_parse_request and inputs the data into a table, NYT,  if it is not already there
 def nyt_info():
     nytInfo = apiCalls.NYT_parse_request()
 
@@ -49,6 +52,7 @@ def nyt_info():
 
 #nyt_info()
 
+# This function calls city_info and inputs the data into a table, Weather, if it is not already there
 def openweather_sqlite():
 
 	try:
@@ -72,4 +76,4 @@ def openweather_sqlite():
 	except:
 		print("Not a valid city or you already entered that city")
 
-openweather_sqlite()
+#openweather_sqlite()

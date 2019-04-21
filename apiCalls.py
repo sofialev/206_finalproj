@@ -4,7 +4,7 @@ import secret
 
 
 # This function makes a call to the yelp api using the city inputted by the user and 
-# returns no more than 20 events
+# returns no more than 20 events in a dictionary
 def yelpRequest(city):
     header = {'Authorization': "Bearer %s" % secret.yelp_api_key}
     params= {}
@@ -33,12 +33,15 @@ def cityInfo():
 
     return cityEvents
 
-# This function asks the user to input a city name
+# This function asks the user to input a city name, which is returned
+# as a string
+
 def inputCity():
     user = input('Please enter a city name ')
     return user
 
 # This function makes a call to the NYT API using the provided search term
+# and returns a list 
 def nytRequest(search_term):
     my_key = secret.nyt_api_key
     type_of_material = "Article"
@@ -50,7 +53,7 @@ def nytRequest(search_term):
     new = json.loads(response.text)
     return new['response']['docs']
 
-# This function asks the user to enter a search term
+# This function asks the user to enter a search term and returns it as a string
 def input_term():
     user = input("Please enter a search term: ")
     return user
@@ -72,7 +75,8 @@ def NYT_parse_request():
         search_articles.append(indivResult)
     return search_articles
 
-# This function makes a call to the Open Weather API using the inputted city
+# This function makes a call to the Open Weather API using the city that the user inputted
+# and returns a dictionary
 def ow_make_request(city):
 	key = secret.ow_api
 	url = "http://api.openweathermap.org/data/2.5/weather?"
@@ -81,13 +85,13 @@ def ow_make_request(city):
 
 	return new
 
-# This function asks the user to input a city 
+# This function asks the user to input a city and returns it as a string
 def input_city():
 	user = input("Please enter a city name ")
 	return user
 
 # This function goes through the  object returned by ow_make_request and returns a
-# dictionary that includes certain information
+# dictionary that includes selected information
 def city_info():
 	city = input_city()
 	data = ow_make_request(city)

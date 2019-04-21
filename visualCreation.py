@@ -5,7 +5,8 @@ import sqlite3
 import matplotlib
 import matplotlib.pyplot as plt
 
-# This function calls information from the city and attendanceCount columns to calculate the average attendance per city
+# This function calls information from the table, Top20EventsinCities, specifically city and attendanceCount columns
+# to calculate the average attendance per city
 def calcAvgAttendance():
     conn = sqlite3.connect("finalProj.sqlite")
     cur = conn.cursor()
@@ -50,12 +51,9 @@ def createAttendanceVisual():
     plt.savefig('attendancePerCity.png')
     plt.show()
 
-
+# This function calls information from the table, NYT, specifically section and words columns to calculate 
+# the average word count per section
 def avg_wordcount():
-    # get a list of how many articles for each city (city_len)
-    # get a count of how many views for each city (city_views)
-    # divide the count by how many articles for each city (city_avg)
-    # create a dictionary with city as keys and average as values (avg_dict)
     conn = sqlite3.connect('finalProj.sqlite')
     cur = conn.cursor()
     cur.execute("SELECT section, words FROM NYT")
@@ -78,7 +76,7 @@ def avg_wordcount():
     
     return count_avg
 
-    
+# This function creates a bar chart that plots the section name on the x axis and the average word count on the y axis
 def createWordCountVisual():
     dict_ = avg_wordcount()
     xvals = dict_.keys()
@@ -94,8 +92,8 @@ def createWordCountVisual():
     plt.show()
 
 
-#calculate the frequencies of cloud statuses from the data base
-def cloud_status():
+# This function calls information from the table, Weather, specifically clouds column to calculate 
+# the frequencies of cloud statuses:
 	conn = sqlite3.connect('finalProj.sqlite')
 	cur = conn.cursor()
 
@@ -110,8 +108,7 @@ def cloud_status():
 	
 	return sorted(list(descriptions.items()), key = lambda x: x[1], reverse = True)
 
-
-#create a bar graph of the frequencies of cloud statuses for all the cities
+# This function creates a bar chart that plots the cloud status  on the x axis and the frequency on the y axis
 def createCloudStatusVisual():
 	d = cloud_status()
 	x_list = []
@@ -133,6 +130,7 @@ def createCloudStatusVisual():
 	plt.savefig("CitySkyDescriptions.png")
 	plt.show()
 
+# In order to create an updated visual, with updated calculations, run this file
 createAttendanceVisual()
 createWordCountVisual()
 createCloudStatusVisual()
