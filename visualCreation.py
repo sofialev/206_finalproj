@@ -48,6 +48,7 @@ def createAttendanceVisual():
     plt.ylabel('Avg Attendance')
     plt.xlabel('City')
     plt.title('Avg Attendance per City')
+    plt.tight_layout()
     plt.savefig('attendancePerCity.png')
     plt.show()
 
@@ -88,25 +89,26 @@ def createWordCountVisual():
     plt.ylabel('Average Word Count')
     plt.xlabel('Section Name')
     plt.title('Average Word Count Per Section')
+    plt.tight_layout()
     plt.savefig('avgwordcount.png')
     plt.show()
 
 
 # This function calls information from the table, Weather, specifically clouds column to calculate 
 # the frequencies of cloud statuses:
-	conn = sqlite3.connect('finalProj.sqlite')
-	cur = conn.cursor()
-
-	cur.execute('SELECT clouds FROM Weather')
-	descriptions = {}
-	for row in cur:
-		status = row[0]
-		if status not in descriptions:
-			descriptions[status] = 0
-		else:
-			descriptions[status] += 1
+    conn = sqlite3.connect('finalProj.sqlite')
+    cur = conn.cursor()
+    
+    cur.execute('SELECT clouds FROM Weather')
+    descriptions = {}
+    for row in cur:
+        status = row[0]
+        if status not in descriptions:
+            descriptions[status] = 0
+        else:
+            descriptions[status] += 1
 	
-	return sorted(list(descriptions.items()), key = lambda x: x[1], reverse = True)
+    return sorted(list(descriptions.items()), key = lambda x: x[1], reverse = True)
 
 # This function creates a bar chart that plots the cloud status  on the x axis and the frequency on the y axis
 def createCloudStatusVisual():
