@@ -13,24 +13,27 @@ def calcAvgAttendance():
     cur.execute('SELECT City, AttendanceCount FROM Top20EventsinCities')
 
     totalAttendance = {}
+    cityAppears = {}
 
     for row in cur:
         city = row[0]
         if city not in totalAttendance:
             totalAttendance[city] = 0
         totalAttendance[city] += row[1]
+        if city not in cityAppears:
+            cityAppears[city] = 0
+        cityAppears[city] += 1
 
     avgAttendance = {}
 
     for item in totalAttendance.items():
         city = item[0]
         total = item[1]
-        avg = total / 20
+        avg = total / cityAppears[city]
         avgAttendance[city] = avg
     
     return avgAttendance
 
-#print(calcAvg())
 
 # This function creates a bar chart that plots the city on the x axis and the average attendance on the y axis
 def createAttendanceVisual():
