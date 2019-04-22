@@ -4,6 +4,7 @@ import sqlite3
 
 import matplotlib
 import matplotlib.pyplot as plt
+import json
 
 # This function calls information from the table, Top20EventsinCities, specifically city and attendanceCount columns
 # to calculate the average attendance per city
@@ -35,23 +36,6 @@ def calcAvgAttendance():
     
     return avgAttendance
 
-
-# This function creates a bar chart that plots the city on the x axis and the average attendance on the y axis
-def createAttendanceVisual():
-    dict_ = calcAvgAttendance()
-    xvals = dict_.keys()
-    yvals = dict_.values()
-
-    plt.bar(xvals, yvals, align='center', color = 'red') #color = ['red', 'blue', 'green', 'yellow']
-
-    plt.xticks(rotation=45)
-    plt.ylabel('Avg Attendance')
-    plt.xlabel('City')
-    plt.title('Avg Attendance per City')
-    plt.tight_layout()
-    plt.savefig('attendancePerCity.png')
-    plt.show()
-
 # This function calls information from the table, NYT, specifically section and words columns to calculate 
 # the average word count per section
 def avg_wordcount():
@@ -77,23 +61,6 @@ def avg_wordcount():
     
     return count_avg
 
-# This function creates a bar chart that plots the section name on the x axis and the average word count on the y axis
-def createWordCountVisual():
-    dict_ = avg_wordcount()
-    xvals = dict_.keys()
-    yvals = dict_.values()
-
-    plt.bar(xvals, yvals, align = 'center', color = 'blue')
-
-    plt.xticks(rotation = 90)
-    plt.ylabel('Average Word Count')
-    plt.xlabel('Section Name')
-    plt.title('Average Word Count Per Section')
-    plt.tight_layout()
-    plt.savefig('avgwordcount.png')
-    plt.show()
-
-
 # This function calls information from the table, Weather, specifically clouds column to calculate 
 # the frequencies of cloud statuses:
 def cloud_status():
@@ -111,34 +78,86 @@ def cloud_status():
 	
     return sorted(list(descriptions.items()), key = lambda x: x[1], reverse = True)
 
-# This function creates a bar chart that plots the cloud status  on the x axis and the frequency on the y axis
-def createCloudStatusVisual():
-	d = cloud_status()
-	x_list = []
-	y_list = []
-	for item in d:
-		x_list.append(item[0])
-		y_list.append(item[1])
-
-	xvals = x_list
-	yvals = y_list
-
-	plt.bar(xvals, yvals, align='center', color = 'yellow')
-
-	plt.xticks(rotation=90)
-	plt.ylabel("Number of cities")
-	plt.xlabel("Sky Statuses")
-	plt.title("Sky descriptions for Cities")
-	plt.tight_layout()
-	plt.savefig("CitySkyDescriptions.png")
-	plt.show()
-
 def calcFile():
     yelp = calcAvgAttendance()
     nyt = avg_wordcount()
     weather = cloud_status()
 
+    new_file = {}
+    new_file['yelp'] = yelp
+    new_file['nyt'] = nyt
+    new_file['weather'] = weather
+
+    with open('calcFile.json', 'w') as outfile:
+        json.dump(new_file, outfile)
+
+#calcFile()
+
+# This function creates a bar chart that plots the city on the x axis and the average attendance on the y axis
+def createAttendanceVisual():
+    f1 = open('calcFile.json', 'r')
+    f1_ = f1.read()
+    f2 = json.loads(f1_)
+    dict_ = f2['yelp']
+    xvals = dict_.keys()
+    yvals = dict_.values()
+
+    plt.bar(xvals, yvals, align='center', color = 'red') #color = ['red', 'blue', 'green', 'yellow']
+
+    plt.xticks(rotation=45)
+    plt.ylabel('Avg Attendance')
+    plt.xlabel('City')
+    plt.title('Avg Attendance per City')
+    plt.tight_layout()
+    plt.savefig('attendancePerCity.png')
+    plt.show()
+
+
+# This function creates a bar chart that plots the section name on the x axis and the average word count on the y axis
+def createWordCountVisual():
+    f1 = open('calcFile.json', 'r')
+    f1_ = f1.read()
+    f2 = json.loads(f1_)
+    dict_ = f2['nyt']
+    xvals = dict_.keys()
+    yvals = dict_.values()
+
+    plt.bar(xvals, yvals, align = 'center', color = 'blue')
+
+    plt.xticks(rotation = 90)
+    plt.ylabel('Average Word Count')
+    plt.xlabel('Section Name')
+    plt.title('Average Word Count Per Section')
+    plt.tight_layout()
+    plt.savefig('avgwordcount.png')
+    plt.show()
+
+# This function creates a bar chart that plots the cloud status  on the x axis and the frequency on the y axis
+def createCloudStatusVisual():
+    f1 = open('calcFile.json', 'r')
+    f1_ = f1.read()
+    f2 = json.loads(f1_)
+    d = f2['weather']
     
+    x_list = []
+    y_list = []
+    for item in d:
+        x_list.append(item[0])
+        y_list.append(item[1])
+    
+    xvals = x_list
+    yvals = y_list
+    
+    plt.bar(xvals, yvals, align='center', color = 'yellow')
+    
+    plt.xticks(rotation=90)
+    plt.ylabel("Number of cities")
+    plt.xlabel("Sky Statuses")
+    plt.title("Sky descriptions for Cities")
+    plt.tight_layout()
+    plt.savefig("CitySkyDescriptions.png")
+    plt.show()
+
 # In order to create an updated visual, with updated calculations, run this file
 createAttendanceVisual()
 createWordCountVisual()
