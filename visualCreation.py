@@ -96,6 +96,7 @@ def createWordCountVisual():
 
 # This function calls information from the table, Weather, specifically clouds column to calculate 
 # the frequencies of cloud statuses:
+def cloud_status()
     conn = sqlite3.connect('finalProj.sqlite')
     cur = conn.cursor()
     
