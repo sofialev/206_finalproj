@@ -96,7 +96,7 @@ def createWordCountVisual():
 
 # This function calls information from the table, Weather, specifically clouds column to calculate 
 # the frequencies of cloud statuses:
-def cloud_status()
+def cloud_status():
     conn = sqlite3.connect('finalProj.sqlite')
     cur = conn.cursor()
     
@@ -133,6 +133,12 @@ def createCloudStatusVisual():
 	plt.savefig("CitySkyDescriptions.png")
 	plt.show()
 
+def calcFile():
+    yelp = calcAvgAttendance()
+    nyt = avg_wordcount()
+    weather = cloud_status()
+
+    
 # In order to create an updated visual, with updated calculations, run this file
 createAttendanceVisual()
 createWordCountVisual()
