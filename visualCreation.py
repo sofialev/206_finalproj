@@ -78,6 +78,8 @@ def cloud_status():
 	
     return sorted(list(descriptions.items()), key = lambda x: x[1], reverse = True)
 
+# This function calls the above calculations and inputs the information into a json file, which is then
+# used to create the visualizations
 def calcFile():
     yelp = calcAvgAttendance()
     nyt = avg_wordcount()
